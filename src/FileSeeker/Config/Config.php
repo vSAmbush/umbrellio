@@ -22,7 +22,7 @@ class Config
     private function __construct()
     {
         $ds = DIRECTORY_SEPARATOR;
-        $this->path = dirname(__FILE__) . "{$ds}..{$ds}..{$ds}..{$ds}config";
+        $this->path = dirname(__FILE__) . "{$ds}..{$ds}..{$ds}config";
         $fileName = $this->path . $ds . 'config.yaml';
         $fileNameChunks = explode('.', $fileName);
         if (!file_exists($fileName) || array_pop($fileNameChunks) !== 'yaml')
