@@ -1,33 +1,25 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: vovan
- * Date: 02.09.2019
- * Time: 10:03
- */
 
-namespace file;
+namespace Umbrellio\FileSeeker\File;
 
-use exception\FileMaxSizeException;
-use exception\FileMimeTypeException;
-use exception\FileNotFoundException;
-use lib\IFileSeeker;
+use Umbrellio\FileSeeker\Config\Config;
+use Umbrellio\FileSeeker\Exception\FileMaxSizeException;
+use Umbrellio\FileSeeker\Exception\FileMimeTypeException;
+use Umbrellio\FileSeeker\Exception\FileNotFoundException;
 
-/**
- * Class FileStringSeeker
- * @package file
- */
 class FileStringSeeker implements IFileSeeker
 {
+    /**
+     * @var Config
+     */
     private $config;
 
     /**
      * FileStringSeeker constructor.
-     * @param $config
      */
-    public function __construct($config)
+    public function __construct()
     {
-        $this->config = $config['file_config'];
+        $this->config = Config::getInstance();
     }
 
     /**
@@ -48,11 +40,11 @@ class FileStringSeeker implements IFileSeeker
                 throw new FileNotFoundException('File not found!');
             }
 
-            if (mime_content_type($fileName) !== $this->config['mime_type']) {
+            if (mime_content_type($fileName) !== $this->config->get('mime_type')) {
                 throw new FileMimeTypeException('File has a wrong mime type!');
             }
 
-            if (filesize($fileName) > $this->config['max_length']) {
+            if (filesize($fileName) > $this->config->get('max_length')) {
                 throw new FileMaxSizeException('File is too long!');
             }
         }

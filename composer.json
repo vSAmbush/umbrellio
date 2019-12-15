@@ -1,0 +1,23 @@
+{
+    "name": "vsambush/umbrellio",
+    "description": "This library is dedicated to find string in file and return its number of line with position if success",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Vladimir",
+            "email": "vovan19977@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require":
+    {
+        "php": ">=5.6"
+    },
+    "autoload":
+    {
+        "psr-4":
+        {
+            "Umbrellio\\FileSeeker\\": "src/FileSeeker"
+        }
+    }
+}

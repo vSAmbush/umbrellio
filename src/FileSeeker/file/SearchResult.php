@@ -1,18 +1,7 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: vovan
- * Date: 02.09.2019
- * Time: 12:01
- */
 
-namespace file;
+namespace Umbrellio\FileSeeker\File;
 
-
-/**
- * Class SearchResult
- * @package file
- */
 class SearchResult
 {
     private $stringNumber;
@@ -21,8 +10,8 @@ class SearchResult
 
     /**
      * SearchResult constructor.
-     * @param $stringNumber
-     * @param $stringPosition
+     * @param integer $stringNumber
+     * @param integer $stringPosition
      */
     public function __construct($stringNumber, $stringPosition)
     {
