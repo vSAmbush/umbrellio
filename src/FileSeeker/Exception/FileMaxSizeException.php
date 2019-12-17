@@ -2,7 +2,7 @@
 
 namespace Umbrellio\FileSeeker\Exception;
 
-class FileMaxSizeException extends FileAbstractException
+class FileMaxSizeException extends AbstractException
 {
-
+    protected $message = 'File is too long!';
 }

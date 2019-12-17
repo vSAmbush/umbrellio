@@ -2,7 +2,7 @@
 
 namespace Umbrellio\FileSeeker\Exception;
 
-class FileNotFoundException extends FileAbstractException
+class FileNotFoundException extends AbstractException
 {
-
+    protected $message = 'File not found!';
 }

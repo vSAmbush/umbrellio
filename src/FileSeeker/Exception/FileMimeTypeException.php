@@ -2,7 +2,7 @@
 
 namespace Umbrellio\FileSeeker\Exception;
 
-class FileMimeTypeException extends FileAbstractException
+class FileMimeTypeException extends AbstractException
 {
-
+    protected $message = 'File has a wrong mime type!';
 }

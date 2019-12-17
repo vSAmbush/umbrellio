@@ -6,31 +6,45 @@ use Exception;
 
 class Config
 {
-    private $path;
     /**
      * @var Config $instance
      */
     private static $instance;
 
-    private static $config;
+    /**
+     * @var array $config
+     */
+    private $config;
 
     /**
      * Config constructor.
-     * Config file must be only with .yaml extension
-     * @throws Exception
+     * Config file must be only .yaml extension
      */
     private function __construct()
     {
+        try {
+            $this->readConfigFromFile();
+        } catch (Exception $ex) {
+            echo $ex->getMessage();
+            die();
+        }
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function readConfigFromFile()
+    {
         $ds = DIRECTORY_SEPARATOR;
-        $this->path = dirname(__FILE__) . "{$ds}..{$ds}..{$ds}config";
-        $fileName = $this->path . $ds . 'config.yaml';
+        $path = dirname(__FILE__) . "{$ds}..{$ds}..{$ds}config";
+        $fileName = $path . $ds . 'config.yaml';
         $fileNameChunks = explode('.', $fileName);
         if (!file_exists($fileName) || array_pop($fileNameChunks) !== 'yaml')
         {
             throw new Exception('Config file is not found or has a wrong format!');
         }
 
-        self::$config = yaml_parse_file($fileName)['file_config'];
+        $this->config = yaml_parse_file($fileName);
     }
 
     /**
@@ -50,11 +64,10 @@ class Config
     }
 
     /**
-     * @param string $key
-     * @return string
+     * @return array
      */
-    public static function get($key)
+    public function getConfig()
     {
-        return self::$config[$key];
+        return $this->config;
     }
 }
