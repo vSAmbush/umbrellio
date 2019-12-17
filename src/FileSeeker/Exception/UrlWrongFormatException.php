@@ -2,7 +2,7 @@
 
 namespace Umbrellio\FileSeeker\Exception;
 
-class WrongUrlFormatException extends AbstractException
+class UrlWrongFormatException extends AbstractException
 {
     protected $message = 'Wrong URL format!';
 }

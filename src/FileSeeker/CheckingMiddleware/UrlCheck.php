@@ -3,7 +3,7 @@
 namespace Umbrellio\FileSeeker\CheckingMiddleware;
 
 use Umbrellio\FileSeeker\Exception\AbstractException;
-use Umbrellio\FileSeeker\Exception\WrongUrlFormatException;
+use Umbrellio\FileSeeker\Exception\UrlWrongFormatException;
 
 class UrlCheck extends Middleware
 {
@@ -17,7 +17,7 @@ class UrlCheck extends Middleware
         if (filter_var($source,FILTER_VALIDATE_URL)) {
             return parent::check($source);
         } else {
-            throw new WrongUrlFormatException();
+            throw new UrlWrongFormatException();
         }
     }
 }
