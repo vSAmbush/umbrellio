@@ -36,7 +36,7 @@ class Config
     private function readConfigFromFile()
     {
         $ds = DIRECTORY_SEPARATOR;
-        $path = dirname(__FILE__) . "{$ds}..{$ds}..{$ds}config";
+        $path = dirname(__FILE__) . "{$ds}..{$ds}..{$ds}..{$ds}config";
         $fileName = $path . $ds . 'config.yaml';
         $fileNameChunks = explode('.', $fileName);
         if (!file_exists($fileName) || array_pop($fileNameChunks) !== 'yaml')
