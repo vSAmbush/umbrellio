@@ -1,18 +1,16 @@
 <?php
 
 use Umbrellio\FileSeeker\Exception\AbstractException;
-use Umbrellio\FileSeeker\File\FileSeeker;
+use Umbrellio\FileSeeker\ResourceFactory;
 
 $ds = DIRECTORY_SEPARATOR;
 $root = dirname(__FILE__);
 
 require_once ($root . $ds . 'vendor' . $ds . 'autoload.php');
 
-$fileSeeker = new FileSeeker($root . $ds . 'file.txt', 'far');
-
 try {
-    $output = $fileSeeker->search();
-    echo ($output) ? $output : 'FALSE';
+    $fileSeeker = ResourceFactory::createResource($root . $ds . 'file.txt', 'far', ResourceFactory::FILE_RESOURCE);
+    echo ($output = $fileSeeker->search()) ? $output : 'FALSE';
 } catch (AbstractException $e) {
     echo 'The exception has been caused with message: ' . $e->getMessage();
 }
