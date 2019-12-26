@@ -19,15 +19,11 @@ class Config
     /**
      * Config constructor.
      * Config file must be only .yaml extension
+     * @throws Exception
      */
     private function __construct()
     {
-        try {
-            $this->readConfigFromFile();
-        } catch (Exception $ex) {
-            echo $ex->getMessage();
-            die();
-        }
+        $this->readConfigFromFile();
     }
 
     /**
@@ -38,8 +34,8 @@ class Config
         $ds = DIRECTORY_SEPARATOR;
         $path = dirname(__FILE__) . "{$ds}..{$ds}..{$ds}..{$ds}config";
         $fileName = $path . $ds . 'config.yaml';
-        $fileNameChunks = explode('.', $fileName);
-        if (!file_exists($fileName) || array_pop($fileNameChunks) !== 'yaml')
+        $info = pathinfo($fileName);
+        if (!file_exists($fileName) || $info['extension'] !== 'yaml')
         {
             throw new Exception('Config file is not found or has a wrong format!');
         }
@@ -57,7 +53,6 @@ class Config
                 self::$instance = new Config();
             } catch (Exception $ex) {
                 echo $ex->getMessage();
-                die();
             }
         }
         return self::$instance;
