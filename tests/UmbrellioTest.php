@@ -36,6 +36,7 @@ class UmbrellioTest extends TestCase
 
     /**
      * @return AbstractSeeker
+     * @depends testConfigInstance
      * @throws Exception
      */
     public function testCreateFileSeeker()
@@ -82,6 +83,10 @@ class UmbrellioTest extends TestCase
         $fileSeeker->search();
     }
 
+    /**
+     * @depends testConfigInstance
+     * @throws AbstractException
+     */
     public function testCheckingChain()
     {
         $checker = new NotFoundCheck();

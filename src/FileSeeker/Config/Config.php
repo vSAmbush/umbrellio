@@ -2,7 +2,7 @@
 
 namespace Umbrellio\FileSeeker\Config;
 
-use Exception;
+use Umbrellio\FileSeeker\Exception\AbstractException;
 
 class Config
 {
@@ -19,7 +19,7 @@ class Config
     /**
      * Config constructor.
      * Config file must be only .yaml extension
-     * @throws Exception
+     * @throws AbstractException
      */
     private function __construct()
     {
@@ -27,7 +27,7 @@ class Config
     }
 
     /**
-     * @throws Exception
+     * @throws AbstractException
      */
     private function readConfigFromFile()
     {
@@ -37,25 +37,26 @@ class Config
         $info = pathinfo($fileName);
         if (!file_exists($fileName) || $info['extension'] !== 'yaml')
         {
-            throw new Exception('Config file is not found or has a wrong format!');
+            throw new AbstractException('Config file is not found or has a wrong format!');
         }
 
         $this->config = yaml_parse_file($fileName);
     }
 
     /**
-     * @return Config
+     * @return Config|false
      */
     public static function getInstance()
     {
-        if (!self::$instance) {
-            try {
+        try {
+            if (!self::$instance) {
                 self::$instance = new Config();
-            } catch (Exception $ex) {
-                echo $ex->getMessage();
             }
+            return self::$instance;
+        } catch (AbstractException $ex) {
+            echo $ex->getMessage();
+            return false;
         }
-        return self::$instance;
     }
 
     /**
