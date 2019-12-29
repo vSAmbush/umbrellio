@@ -1,6 +1,10 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
+use Umbrellio\FileSeeker\CheckingMiddleware\MaxSizeCheck;
+use Umbrellio\FileSeeker\CheckingMiddleware\MimeTypeCheck;
+use Umbrellio\FileSeeker\CheckingMiddleware\NotFoundCheck;
+use Umbrellio\FileSeeker\Config\Config;
 use Umbrellio\FileSeeker\Exception\AbstractException;
 use Umbrellio\FileSeeker\Exception\FileMaxSizeException;
 use Umbrellio\FileSeeker\Exception\FileMimeTypeException;
@@ -12,11 +16,22 @@ use Umbrellio\FileSeeker\Seeker\SearchResult;
 
 class UmbrellioTest extends TestCase
 {
+    /**
+     * @throws Exception
+     */
+    public function testConfigInstance()
+    {
+        $this->assertInstanceOf(Config::class, Config::getInstance());
+    }
+
+    /**
+     * @throws AbstractException
+     */
     public function testWrongTypeSeekerException()
     {
         $this->expectException(AbstractException::class);
 
-        $fileSeeker = ResourceFactory::createResource('sfaf', 'saf', 'sag');
+        ResourceFactory::createResource('sfaf', 'saf', 'sag');
     }
 
     /**
@@ -67,9 +82,19 @@ class UmbrellioTest extends TestCase
         $fileSeeker->search();
     }
 
+    public function testCheckingChain()
+    {
+        $checker = new NotFoundCheck();
+        $checker->setNext(new MimeTypeCheck());
+        $checker->setNext(new MaxSizeCheck());
+
+        $this->assertTrue($checker->check('tests/testFiles/file.txt'));
+    }
+
     /**
      * @param AbstractSeeker $fileSeeker
      * @depends testCreateFileSeeker
+     * @depends testCheckingChain
      * @throws Exception
      */
     public function testProperPerformOfFileSeeker($fileSeeker)
